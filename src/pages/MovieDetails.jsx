@@ -6,6 +6,7 @@ import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
 
 const MovieDetails = () => {
   const [film, setFilm] = useState({});
+  const [isVisible, setIsVisible] = useState(false);
   const location = useLocation();
   const backLinkLocationRef = useRef(location.state?.from ?? '/movies');
   const { movieId } = useParams();
@@ -13,9 +14,11 @@ const MovieDetails = () => {
   useEffect(() => {
     const fetchFilmsAndUpdateState = async () => {
       try {
+        setIsVisible(false);
         const results = await fetchFullInfoMovie(movieId);
-        if (!results) {
-          throw new Error('No popular films today');
+        console.log('first', results.homepage);
+        if (!results.homepage) {
+          setIsVisible(true);
         }
         setFilm(results);
       } catch (error) {
@@ -38,7 +41,7 @@ const MovieDetails = () => {
 
   return (
     <>
-      {shouldShowInfo && (
+      {shouldShowInfo ? (
         <>
           <Link to={backLinkLocationRef}>Go Back</Link>
           <div>
@@ -63,15 +66,15 @@ const MovieDetails = () => {
               </div>
             </div>
           </div>
-
           <div>
             <AdditionalInfo id={movieId} location={location} />
           </div>
-
           <Suspense fallback={<div>Loading info...</div>}>
             <Outlet />
           </Suspense>
         </>
+      ) : (
+        isVisible && <h2>Sorry ... No information</h2>
       )}
     </>
   );
