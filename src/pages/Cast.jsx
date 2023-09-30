@@ -1,4 +1,5 @@
 import { fetchActorsMovie } from 'Api/getApi';
+import NoInformation from 'components/NoInformation/NoInformation';
 import Notiflix from 'notiflix';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -41,7 +42,7 @@ const Cast = () => {
             </li>
           ))
         ) : (
-          <p>Sorry....☹️ No info about actors</p>
+          <NoInformation />
         )}
       </ul>
     </div>
