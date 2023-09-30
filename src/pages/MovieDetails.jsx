@@ -1,5 +1,6 @@
 import { fetchFullInfoMovie } from 'Api/getApi';
 import AdditionalInfo from 'components/AdditionalInfo/AdditionalInfo';
+import NoInformation from 'components/NoInformation/NoInformation';
 import Notiflix from 'notiflix';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
@@ -16,7 +17,6 @@ const MovieDetails = () => {
       try {
         setIsVisible(false);
         const results = await fetchFullInfoMovie(movieId);
-        console.log('first', results.homepage);
         if (!results.homepage) {
           setIsVisible(true);
         }
@@ -37,13 +37,13 @@ const MovieDetails = () => {
     release_date &&
     vote_average &&
     overview &&
-    genres?.length > 0;
+    genres?.length;
 
   return (
     <>
       {shouldShowInfo ? (
         <>
-          <Link to={backLinkLocationRef}>Go Back</Link>
+          <Link to={backLinkLocationRef.current}>Go Back</Link>
           <div>
             <img
               src={`https://image.tmdb.org/t/p/w500${poster_path}`}
@@ -67,14 +67,14 @@ const MovieDetails = () => {
             </div>
           </div>
           <div>
-            <AdditionalInfo id={movieId} location={location} />
+            <AdditionalInfo id={movieId} />
           </div>
           <Suspense fallback={<div>Loading info...</div>}>
             <Outlet />
           </Suspense>
         </>
       ) : (
-        isVisible && <h2>Sorry ... No information</h2>
+        isVisible && <NoInformation />
       )}
     </>
   );
