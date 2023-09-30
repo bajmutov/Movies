@@ -1,4 +1,5 @@
 import { fetchReviewsMovie } from 'Api/getApi';
+import NoInformation from 'components/NoInformation/NoInformation';
 import Notiflix from 'notiflix';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -34,7 +35,7 @@ const Reviews = () => {
             </li>
           ))
         ) : (
-          <p>Sorry....☹️ No reviews about this film</p>
+          <NoInformation />
         )}
       </ul>
     </div>
