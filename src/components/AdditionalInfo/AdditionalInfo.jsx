@@ -1,19 +1,15 @@
 import { Link } from 'react-router-dom';
 
-const AdditionalInfo = ({ location }) => {
+const AdditionalInfo = () => {
   return (
     <div>
       <h2>Additional information</h2>
       <ul>
         <li>
-          <Link to={`cast`} state={{ from: location }}>
-            Cast
-          </Link>
+          <Link to={`cast`}>Cast</Link>
         </li>
         <li>
-          <Link to={`reviews`} state={{ from: location }}>
-            Reviews
-          </Link>
+          <Link to={`reviews`}>Reviews</Link>
         </li>
       </ul>
     </div>
