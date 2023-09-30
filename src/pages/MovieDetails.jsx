@@ -4,7 +4,8 @@ import { Loader } from 'components/Loader/Loader';
 import NoInformation from 'components/NoInformation/NoInformation';
 import Notiflix from 'notiflix';
 import { Suspense, useEffect, useRef, useState } from 'react';
-import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
+import { StyledBackLink } from './MovieDetails.styled';
 
 const MovieDetails = () => {
   const [film, setFilm] = useState({});
@@ -49,7 +50,9 @@ const MovieDetails = () => {
       {isLoading && <Loader />}
       {shouldShowInfo ? (
         <>
-          <Link to={backLinkLocationRef.current}>Go Back</Link>
+          <StyledBackLink to={backLinkLocationRef.current}>
+            Go Back
+          </StyledBackLink>
           <div>
             <img
               src={`https://image.tmdb.org/t/p/w500${poster_path}`}

@@ -1,9 +1,20 @@
+import {
+  InputNameMovie,
+  SearchForm,
+  SearchFormButton,
+} from './SearchBox.styled';
+
 const SearchBox = ({ onSubmit }) => {
   return (
-    <form onSubmit={onSubmit}>
-      <input type="text" name="movieName" />
-      <button type="submit">Search</button>
-    </form>
+    <SearchForm onSubmit={onSubmit}>
+      <InputNameMovie
+        type="text"
+        name="movieName"
+        autoFocus
+        placeholder="example: Batman"
+      />
+      <SearchFormButton type="submit">Search</SearchFormButton>
+    </SearchForm>
   );
 };
 
