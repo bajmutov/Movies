@@ -1,5 +1,6 @@
 import { fetchFullInfoMovie } from 'Api/getApi';
 import AdditionalInfo from 'components/AdditionalInfo/AdditionalInfo';
+import { Loader } from 'components/Loader/Loader';
 import NoInformation from 'components/NoInformation/NoInformation';
 import Notiflix from 'notiflix';
 import { Suspense, useEffect, useRef, useState } from 'react';
@@ -7,6 +8,7 @@ import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
 
 const MovieDetails = () => {
   const [film, setFilm] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const location = useLocation();
   const backLinkLocationRef = useRef(location.state?.from ?? '/movies');
@@ -15,6 +17,7 @@ const MovieDetails = () => {
   useEffect(() => {
     const fetchFilmsAndUpdateState = async () => {
       try {
+        setIsLoading(true);
         setIsVisible(false);
         const results = await fetchFullInfoMovie(movieId);
         if (!results.homepage) {
@@ -23,6 +26,8 @@ const MovieDetails = () => {
         setFilm(results);
       } catch (error) {
         Notiflix.Notify.failure(error.message);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchFilmsAndUpdateState();
@@ -41,6 +46,7 @@ const MovieDetails = () => {
 
   return (
     <>
+      {isLoading && <Loader />}
       {shouldShowInfo ? (
         <>
           <Link to={backLinkLocationRef.current}>Go Back</Link>
