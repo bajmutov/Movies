@@ -5,7 +5,12 @@ import NoInformation from 'components/NoInformation/NoInformation';
 import Notiflix from 'notiflix';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import { Outlet, useLocation, useParams } from 'react-router-dom';
-import { StyledBackLink } from './MovieDetails.styled';
+import {
+  Container,
+  DescrWrap,
+  GenresWrap,
+  StyledBackLink,
+} from './MovieDetails.styled';
 
 const MovieDetails = () => {
   const [film, setFilm] = useState({});
@@ -53,14 +58,14 @@ const MovieDetails = () => {
           <StyledBackLink to={backLinkLocationRef.current}>
             Go Back
           </StyledBackLink>
-          <div>
+          <Container>
             <img
               src={`https://image.tmdb.org/t/p/w500${poster_path}`}
               alt="Movie poster"
               width={300}
               height={400}
             />
-            <div>
+            <DescrWrap>
               <h2>
                 {title} ({release_date?.split('-')[0]})
               </h2>
@@ -68,13 +73,13 @@ const MovieDetails = () => {
               <h3>Overview</h3>
               <p>{overview}</p>
               <h3>Genres</h3>
-              <div>
+              <GenresWrap>
                 {genres?.map(({ id, name }) => (
                   <p key={id}>{name}</p>
                 ))}
-              </div>
-            </div>
-          </div>
+              </GenresWrap>
+            </DescrWrap>
+          </Container>
           <div>
             <AdditionalInfo id={movieId} />
           </div>
@@ -83,7 +88,12 @@ const MovieDetails = () => {
           </Suspense>
         </>
       ) : (
-        isVisible && <NoInformation />
+        <>
+          {isVisible && <NoInformation />}
+          <StyledBackLink to={backLinkLocationRef.current}>
+            Go Back
+          </StyledBackLink>
+        </>
       )}
     </>
   );

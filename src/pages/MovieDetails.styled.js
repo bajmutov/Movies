@@ -15,3 +15,17 @@ export const StyledBackLink = styled(Link)`
   cursor: pointer;
   box-shadow: inset 0 0 10px 5px rgba(0, 0, 0, 0.3);
 `;
+
+export const Container = styled.div`
+  display: flex;
+`;
+
+export const DescrWrap = styled.div`
+  padding-top: 40px;
+  margin-left: 25px;
+`;
+
+export const GenresWrap = styled.div`
+  display: flex;
+  gap: 10px;
+`;

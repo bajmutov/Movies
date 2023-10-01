@@ -3,6 +3,7 @@ import NoInformation from 'components/NoInformation/NoInformation';
 import Notiflix from 'notiflix';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { DescWrap, Li } from './Cast.styled';
 
 const Cast = () => {
   const [actors, setActors] = useState([]);
@@ -28,7 +29,7 @@ const Cast = () => {
       <ul>
         {actors?.length ? (
           actors.map(({ id, character, profile_path, name }) => (
-            <li key={id}>
+            <Li key={id}>
               {profile_path && (
                 <img
                   src={`https://image.tmdb.org/t/p/w500${profile_path}`}
@@ -37,9 +38,15 @@ const Cast = () => {
                   height={120}
                 />
               )}
-              <p>Actor name: {name}</p>
-              <p>Character: {character}</p>
-            </li>
+              <DescWrap>
+                <p>
+                  <b>Actor name</b>: {name}
+                </p>
+                <p>
+                  <b>Character</b>: {character}
+                </p>
+              </DescWrap>
+            </Li>
           ))
         ) : (
           <NoInformation />
