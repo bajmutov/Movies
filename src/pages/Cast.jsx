@@ -8,13 +8,15 @@ import { DescWrap, Li } from './Cast.styled';
 const Cast = () => {
   const [actors, setActors] = useState([]);
   const { movieId } = useParams();
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const fetchFilmsCredits = async () => {
       try {
+        setIsVisible(false);
         const results = await fetchActorsMovie(movieId);
         if (!results) {
-          throw new Error('No info about film');
+          setIsVisible(true);
         }
         setActors(results);
       } catch (error) {
@@ -27,30 +29,28 @@ const Cast = () => {
   return (
     <div>
       <ul>
-        {actors?.length ? (
-          actors.map(({ id, character, profile_path, name }) => (
-            <Li key={id}>
-              {profile_path && (
-                <img
-                  src={`https://image.tmdb.org/t/p/w500${profile_path}`}
-                  alt="Actor"
-                  width={80}
-                  height={120}
-                />
-              )}
-              <DescWrap>
-                <p>
-                  <b>Actor name</b>: {name}
-                </p>
-                <p>
-                  <b>Character</b>: {character}
-                </p>
-              </DescWrap>
-            </Li>
-          ))
-        ) : (
-          <NoInformation />
-        )}
+        {actors?.length
+          ? actors.map(({ id, character, profile_path, name }) => (
+              <Li key={id}>
+                {profile_path && (
+                  <img
+                    src={`https://image.tmdb.org/t/p/w500${profile_path}`}
+                    alt="Actor"
+                    width={80}
+                    height={120}
+                  />
+                )}
+                <DescWrap>
+                  <p>
+                    <b>Actor name</b>: {name}
+                  </p>
+                  <p>
+                    <b>Character</b>: {character}
+                  </p>
+                </DescWrap>
+              </Li>
+            ))
+          : isVisible && <NoInformation />}
       </ul>
     </div>
   );

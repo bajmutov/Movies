@@ -52,12 +52,10 @@ const MovieDetails = () => {
 
   return (
     <>
+      <StyledBackLink to={backLinkLocationRef.current}>Go Back</StyledBackLink>
       {isLoading && <Loader />}
       {shouldShowInfo ? (
         <>
-          <StyledBackLink to={backLinkLocationRef.current}>
-            Go Back
-          </StyledBackLink>
           <Container>
             <img
               src={`https://image.tmdb.org/t/p/w500${poster_path}`}
@@ -90,9 +88,11 @@ const MovieDetails = () => {
       ) : (
         <>
           {isVisible && <NoInformation />}
-          <StyledBackLink to={backLinkLocationRef.current}>
-            Go Back
-          </StyledBackLink>
+          {isVisible && (
+            <StyledBackLink to={backLinkLocationRef.current}>
+              Go Back
+            </StyledBackLink>
+          )}
         </>
       )}
     </>

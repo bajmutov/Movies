@@ -7,13 +7,15 @@ import { useParams } from 'react-router-dom';
 const Reviews = () => {
   const [films, setFilms] = useState([]);
   const { movieId } = useParams();
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const fetchFilmsReviews = async () => {
       try {
+        setIsVisible(false);
         const results = await fetchReviewsMovie(movieId);
         if (!results) {
-          throw new Error('No info about film');
+          setIsVisible(true);
         }
         setFilms(results);
       } catch (error) {
@@ -26,17 +28,15 @@ const Reviews = () => {
   return (
     <div>
       <ul>
-        {films?.length ? (
-          films.map(({ id, content, author }) => (
-            <li key={id}>
-              {' '}
-              <h3>Author: {author}</h3>
-              <p>{content}</p>
-            </li>
-          ))
-        ) : (
-          <NoInformation />
-        )}
+        {films?.length
+          ? films.map(({ id, content, author }) => (
+              <li key={id}>
+                {' '}
+                <h3>Author: {author}</h3>
+                <p>{content}</p>
+              </li>
+            ))
+          : isVisible && <NoInformation />}
       </ul>
     </div>
   );
