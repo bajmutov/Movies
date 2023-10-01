@@ -14,7 +14,7 @@ const Reviews = () => {
       try {
         setIsVisible(false);
         const results = await fetchReviewsMovie(movieId);
-        if (!results) {
+        if (!results.length) {
           setIsVisible(true);
         }
         setFilms(results);
@@ -28,15 +28,17 @@ const Reviews = () => {
   return (
     <div>
       <ul>
-        {films?.length
-          ? films.map(({ id, content, author }) => (
-              <li key={id}>
-                {' '}
-                <h3>Author: {author}</h3>
-                <p>{content}</p>
-              </li>
-            ))
-          : isVisible && <NoInformation />}
+        {films?.length ? (
+          films.map(({ id, content, author }) => (
+            <li key={id}>
+              {' '}
+              <h3>Author: {author}</h3>
+              <p>{content}</p>
+            </li>
+          ))
+        ) : (
+          <>{isVisible && <NoInformation />}</>
+        )}
       </ul>
     </div>
   );

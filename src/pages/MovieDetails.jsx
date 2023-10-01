@@ -86,14 +86,7 @@ const MovieDetails = () => {
           </Suspense>
         </>
       ) : (
-        <>
-          {isVisible && <NoInformation />}
-          {isVisible && (
-            <StyledBackLink to={backLinkLocationRef.current}>
-              Go Back
-            </StyledBackLink>
-          )}
-        </>
+        <>{isVisible && <NoInformation />}</>
       )}
     </>
   );
